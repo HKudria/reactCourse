@@ -1,9 +1,12 @@
 import './Header.module.css'
+import Nav from './Nav/Nav';
 
 function Header() {
 
   return (
-      <div></div>
+      <>
+        <Nav/>
+      </>
   )
 }
 

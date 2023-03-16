@@ -1,0 +1,7 @@
+a {
+    text-decoration: none;
+}
+
+.active a {
+    color: #0c63e4;
+}
