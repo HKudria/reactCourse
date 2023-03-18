@@ -7,6 +7,7 @@ function App() {
   return (
       <>
         <Header/>
+          <h1>Page about US!</h1>
       </>
   )
 }
