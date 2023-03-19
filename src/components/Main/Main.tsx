@@ -1,5 +1,4 @@
 import s from './Main.module.css'
-import Header from '../Header/Header';
 import React from 'react';
 import data from '../../assets/data.json'
 import Card from './Card/Card';
@@ -15,8 +14,7 @@ function Main() {
 
     return (
         <>
-            <Header/>
-            <div className={s.wrapper}>
+            <div className={s.wrapper} role={'wrapper'}>
                 {data.map((cardData: CardData) => <Card key={cardData.id} id={cardData.id} name={cardData.name}
                                                         content={cardData.content} imgPath={cardData.imgPath}/>)}
             </div>
