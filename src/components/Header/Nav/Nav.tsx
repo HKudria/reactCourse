@@ -1,4 +1,4 @@
-import s from '../Nav/Nav.module.css';
+import s from './Nav.module.css';
 import {NavLink} from 'react-router-dom';
 import Search from '../Search/Search';
 
