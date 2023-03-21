@@ -5,3 +5,9 @@ a {
 .active a {
     color: #0c63e4;
 }
+
+body{
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}

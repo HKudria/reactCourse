@@ -7,6 +7,7 @@ import AboutUs from './components/AboutUs/AboutUs';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import Header from './components/Header/Header';
+import Form from './components/Form/Form';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <BrowserRouter>
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
             <Routes>
                 <Route path="/" element={<Main/>}/>
                 <Route path="/aboutUs" element={<AboutUs/>}/>
+                <Route path="/form" element={<Form/>}/>
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </React.StrictMode>
