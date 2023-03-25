@@ -1,5 +1,6 @@
 import s from './Form.module.css'
 import React, {ChangeEvent} from 'react';
+import Result from './Result/Result';
 
 interface FormStateInterface {
     text: string,
@@ -10,6 +11,16 @@ interface FormStateInterface {
     isSubmit: boolean,
     file: React.RefObject<HTMLInputElement>
     error: FormError
+    sumbtions: FormResult[]
+}
+
+export interface FormResult {
+    text: string,
+    date: string,
+    select: string,
+    checkbox: boolean,
+    switcher: string,
+    file: string
 }
 
 interface FormError {
@@ -30,7 +41,8 @@ export default class Form extends React.Component {
         isSubmit: false,
         switcher: 'radio1',
         file: React.createRef(),
-        error: {}
+        error: {},
+        sumbtions: []
     };
 
     onChangeText = (event: ChangeEvent<HTMLInputElement>) => {
@@ -55,43 +67,60 @@ export default class Form extends React.Component {
 
     onSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        this.setState({...this.state, isSubmit: true, error: this.validateForm()})
+        const validation = this.validateForm()
+        if (validation.valid) {
+            this.setState({...this.state, isSubmit: true, error: validation.error})
+            this.addSubmittedValue()
+        } else {
+            this.setState({...this.state, isSubmit: false, error: validation.error})
+        }
+
     }
 
     validateForm = () => {
         const error: FormError = {}
         if (this.state.text.length === 0) error.text = 'Fill text';
-        if (this.state.date.length === 0) error.date ='Fill date';
-        if (!this.state.checkbox) error.checkbox ='Check checkbox';
-        if (!this.state.select) error.select ='Select should be selected';
-        if (!this.state.switcher) error.switcher ='Switcher should be chosen';
-        if (this.state.file.current && this.state.file.current.files && this.state.file.current.files.length === 0) error.file ='Fill should be uploaded';
-        if(Object.keys(error).length === 0){
-            return {}
+        if (this.state.date.length === 0) error.date = 'Fill date';
+        if (!this.state.checkbox) error.checkbox = 'Check checkbox';
+        if (!this.state.select) error.select = 'Select should be selected';
+        if (!this.state.switcher) error.switcher = 'Switcher should be chosen';
+        if (this.state.file.current && this.state.file.current.files && this.state.file.current.files.length === 0) error.file = 'Fill should be uploaded';
+        if (Object.keys(error).length === 0) {
+            return {valid: true, error: {}}
         } else {
-            return error
+            return {valid: false, error: error}
         }
     }
 
-    showSubmittedValue = () => {
-        if(Object.keys(this.state.error).length === 0){
+    addSubmittedValue = () => {
+        if (Object.keys(this.state.error).length === 0) {
             const date = new Date(this.state.date)
-            return (
-                <ul className="list-group">
-                    <li className="list-group-item">Text: {this.state.text}</li>
-                    <li className="list-group-item">Date: {date.toLocaleString()}</li>
-                    <li className="list-group-item">Select: {this.state.select}</li>
-                    <li className="list-group-item">Checkbox: {this.state.checkbox}</li>
-                    <li className="list-group-item">File: {this.state.file.current && this.state.file.current.files && this.state.file.current.files[0].name}</li>
-                    <li className="list-group-item">Switcher: {this.state.switcher}</li>
-                </ul>
-            )
+            const result: FormResult  = {
+                date: date.toLocaleString(),
+                text: this.state.text,
+                select: this.state.select,
+                checkbox: this.state.checkbox,
+                file: (this.state.file.current && this.state.file.current.files && this.state.file.current.files[0].name) ?? '',
+                switcher: this.state.switcher
+            }
+
+            this.setState({
+                    ...this.state,
+                    sumbtions: [...this.state.sumbtions, result],
+                    text: '',
+                    date: '',
+                    checkbox: false,
+                    switcher: 'radio1',
+                    isSubmit: false,
+                    error: {}
+                },
+            );
+            if (this.state.file.current) this.state.file.current.value = '';
         }
         return (<></>)
     }
 
     render() {
-
         return (
             <div className={s.wrapper}>
                 <form className={s.form} onSubmit={this.onSubmitForm}>
@@ -99,20 +128,23 @@ export default class Form extends React.Component {
                         <label htmlFor="text" className="form-label">Enter text</label>
                         <input type="text" className="form-control" id="text" placeholder="Enter text"
                                onChange={this.onChangeText} value={this.state.text}/>
-                        {this.state.error.text && <div className="invalid-feedback d-block">{this.state.error.text}</div>}
+                        {this.state.error.text &&
+                            <div className="invalid-feedback d-block">{this.state.error.text}</div>}
                     </div>
                     <div className="form-group">
                         <label htmlFor="date" className="form-label">Select date</label>
                         <input type="date" className="form-control" id="date" onChange={this.onChangeDate}
                                value={this.state.date}/>
-                        {this.state.error.date && <div className="invalid-feedback d-block">{this.state.error.date}</div>}
+                        {this.state.error.date &&
+                            <div className="invalid-feedback d-block">{this.state.error.date}</div>}
                     </div>
                     <div className="form-check">
                         <label className="form-label" htmlFor="checkbox">Check me out</label>
                         <input type="checkbox" className="form-check-input" id="checkbox"
                                onChange={this.onChangeCheckbox} checked={this.state.checkbox}/>
                     </div>
-                    {this.state.error.checkbox && <div className="invalid-feedback d-block">{this.state.error.checkbox}</div>}
+                    {this.state.error.checkbox &&
+                        <div className="invalid-feedback d-block">{this.state.error.checkbox}</div>}
                     <div className="form-group">
                         <label className="form-label" htmlFor="select">Chose select option</label><br/>
                         <select value={this.state.select} id="select" onChange={this.onChangeSelect}
@@ -123,12 +155,14 @@ export default class Form extends React.Component {
                             <option value="coconut">Coconut</option>
                             <option value="mango">Mango</option>
                         </select>
-                        {this.state.error.select && <div className="invalid-feedback d-block">{this.state.error.select}</div>}
+                        {this.state.error.select &&
+                            <div className="invalid-feedback d-block">{this.state.error.select}</div>}
                     </div>
                     <div className="form-group">
                         <label className="form-label" htmlFor="file">Upload file</label><br/>
                         <input type="file" className="form-control" id="file" ref={this.state.file}/>
-                        {this.state.error.file && <div className="invalid-feedback d-block">{this.state.error.file}</div>}
+                        {this.state.error.file &&
+                            <div className="invalid-feedback d-block">{this.state.error.file}</div>}
                     </div>
                     <div className="form-check">
                         <input className="form-check-input" type="radio" value="radio1" id="flexRadioDefault1"
@@ -144,10 +178,11 @@ export default class Form extends React.Component {
                             Default radio 2
                         </label>
                     </div>
-                    {this.state.error.switcher && <div className="invalid-feedback d-block">{this.state.error.switcher}</div>}
+                    {this.state.error.switcher &&
+                        <div className="invalid-feedback d-block">{this.state.error.switcher}</div>}
                     <button type="submit" className="btn btn-primary">Submit</button>
                 </form>
-                {this.state.isSubmit && this.showSubmittedValue()}
+                {this.state.sumbtions.map((el, index) => <Result key={index} text={el.text} select={el.select} date={el.date} file={el.file} checkbox={el.checkbox} switcher={el.switcher}/>)}
             </div>
         );
     }
