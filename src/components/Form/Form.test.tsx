@@ -17,15 +17,14 @@ describe('Header', () => {
     })
 
     it('should show error', () =>{
-        render(<Router><Form /></Router>);
-        const button = screen.getByRole('button');
-
-        fireEvent.click(button)
-
-        expect(screen.getByText(/Fill text/i)).toBeInTheDocument();
-        expect(screen.getByText(/Fill date/i)).toBeInTheDocument();
-        expect(screen.getByText(/Check checkbox/i)).toBeInTheDocument();
-        expect(screen.getByText(/Select should be selected/i)).toBeInTheDocument();
-        expect(screen.getByText(/Fill should be uploaded/i)).toBeInTheDocument();
+        const { getByTestId, findByText } = render(<Router><Form /></Router>);
+        getByTestId('submit');
+        fireEvent.click(getByTestId('submit'));
+        findByText('Fill the text');
+        findByText('Date should be field');
+        findByText('Check checkbox should be');
+        findByText('Select should be selected');
+        findByText('File should be uploaded');
+        findByText('File should be uploaded');
     })
 })
