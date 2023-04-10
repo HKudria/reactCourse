@@ -1,9 +1,4 @@
-import {Color} from 'react-bootstrap/types';
-import {useState} from 'react';
-import {json} from 'react-router-dom';
-
-const API_KEY = "16b6008f7224409dd68424b013cbbdcc"
-const SECRET = '97cb550e9414da59'
+const API_KEY = '16b6008f7224409dd68424b013cbbdcc'
 const URL = 'https://api.flickr.com/services/rest/?method='
 
 export enum flickrMethodsEnum {
@@ -40,8 +35,6 @@ interface FlickrPropsInterface {
 
 export const getData = (props: FlickrPropsInterface) => {
     return fetch(
-        `${URL}${props.method}&api_key=${API_KEY}${props.params}&format=json&nojsoncallback=1`
-    ).then(response => {
-        return response.json()
-    })
+        `${URL}${props.method}&api_key=${API_KEY}${props.params ?? ''}&format=json&nojsoncallback=1`
+    )
 }

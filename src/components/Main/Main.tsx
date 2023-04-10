@@ -2,7 +2,6 @@ import s from './Main.module.css'
 import React, {useEffect, useState} from 'react';
 import {flickrMethodsEnum, FlickrResponseInterface, getData} from '../Api/Flirckr';
 import CardV2 from './CardV2/CardV2';
-import {json} from 'react-router-dom';
 
 export interface CardData {
     id: number
@@ -12,15 +11,23 @@ export interface CardData {
 }
 
 function Main() {
-
+    const [errorMessage, setErrorMessage] = useState('');
     const [gallery, setGallery] = useState<FlickrResponseInterface>();
     const [isLoad, setIsLoad] = useState(true);
     const [countArray, setCountArray] = useState<string[]>([]);
 
     useEffect(() => {
-        getData({method: flickrMethodsEnum.SEARCH_PHOTO, params: '&text=sunrise'}).then(json => {
-            setGallery(json.photos)
-        })
+        getData({method: flickrMethodsEnum.SEARCH_PHOTO, params: '&text=sunrise'})
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json()
+                } else {
+                    setErrorMessage('Something went wrong')
+                }
+            })
+            .then(json => {
+                setGallery(json.photos)
+            })
         window.addEventListener('keypress', e => {
             if (e.key === 'Enter') {
                 updateState()
@@ -35,28 +42,47 @@ function Main() {
             getData({
                 method: flickrMethodsEnum.SEARCH_PHOTO,
                 params: `&text=${query}`
-            }).then(json => {
-                setCountArray([])
-                return json
-            }).then(json => setGallery(json.photos))
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        return response.json()
+                    } else {
+                        setErrorMessage('Something went wrong')
+                    }
+                })
+                .then(json => {
+                    setCountArray([])
+                    return json
+                })
+                .then(json => setGallery(json.photos))
         } else {
-            console.log('empty')
+            setErrorMessage('Search input is empty')
         }
     }
 
     const countIncrease = (id: string) => {
-       countArray.push(id)
-        if(countArray.length === gallery?.photo.length){
+        countArray.push(id)
+        if (countArray.length === gallery?.photo.length) {
             setIsLoad(false)
         }
     }
 
+    const resetError = () => {
+        setTimeout(() => setErrorMessage(''), 10000)
+
+        return(<div className="alert alert-danger" role="alert">
+                    {errorMessage}
+                </div> )
+    }
+
     return (
         <>
+            {errorMessage.length > 0 && resetError()}
             {isLoad &&
                 <div className={s.spinner}>
                     <div className={`${s.progress} progress`}>
-                        <div className="progress-bar progress-bar-striped" role="progressbar" style={{width: countArray.length + '%'}}></div>
+                        <div className="progress-bar progress-bar-striped" role="progressbar"
+                             style={{width: `${countArray.length}%`}}></div>
                     </div>
                 </div>
             }
