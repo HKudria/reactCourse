@@ -37,11 +37,7 @@ function Main() {
     return (
         <>
             <div className={s.wrapper} role={'wrapper'}>
-                {gallery?.photo.map((photo) => <CardV2 key={photo.id} id={photo.id} owner={photo.owner} secret={photo.secret}
-                                                       server={photo.server} farm={photo.farm} title={photo.title}
-                                                       ispublic={photo.ispublic}
-                                                       isfriend={photo.isfriend} isfamily={photo.isfamily}
-                                                       is_primary={photo.is_primary} has_comment={photo.has_comment}/>)}
+                {gallery?.photo.map((photo) => <CardV2 key={photo.id} photo={photo}/>)}
             </div>
         </>
     )
