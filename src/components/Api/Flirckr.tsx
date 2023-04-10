@@ -11,7 +11,7 @@ export interface FlickrPhotoInterface {
     owner: string,
     secret: string,
     server: string,
-    farm: 9,
+    farm: number,
     title: string,
     ispublic: boolean,
     isfriend: boolean,

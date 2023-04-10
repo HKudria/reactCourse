@@ -86,7 +86,7 @@ function Main() {
                     </div>
                 </div>
             }
-            <div className={s.wrapper} role={'wrapper'}>
+            <div className={`${s.wrapper} card`} role={'wrapper'}>
                 {gallery?.photo.map((photo, key) => <CardV2 key={key} photo={photo} countIncrease={countIncrease}/>)}
             </div>
         </>

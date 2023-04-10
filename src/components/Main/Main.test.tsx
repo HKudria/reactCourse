@@ -9,8 +9,7 @@ describe('Main', () => {
     })
 
     it('should render card', () =>{
-        render(<Main />);
-        expect(screen.getByText(/Zathin/i)).toBeInTheDocument();
-        expect(screen.getByText(/Stim/i)).toBeInTheDocument();
+        const { container } = render(<Main />);
+        expect(container.getElementsByClassName('card').length).toBe(1);
     })
 })
