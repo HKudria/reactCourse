@@ -5,8 +5,9 @@ import Modal from './Modal/Modal';
 
 interface CardV2PropsInterface {
     photo: FlickrPhotoInterface
+    countIncrease: (id: string) => void
 }
-const CardV2 = ({photo}: CardV2PropsInterface) => {
+const CardV2 = ({photo, countIncrease}: CardV2PropsInterface) => {
     const [imgSrc, setImgSrc] = useState('');
     const [isModal, setIsModal] = useState(false);
     useEffect(() => {
@@ -22,7 +23,7 @@ const CardV2 = ({photo}: CardV2PropsInterface) => {
         <>
             {isModal && <Modal photo={photo} closeModal={toggleModal} src={imgSrc}/>}
             <div className={`${s.fontSize} card`} onClick={toggleModal}>
-                <img className="card-img-top" src={imgSrc} alt={photo.id}/>
+                <img className="card-img-top" src={imgSrc} alt={photo.id} onLoad={() => countIncrease(photo.id)}/>
                 <div className="card-body">
                     <h5 className="card-title">{photo.title}</h5>
                 </div>

@@ -4,3 +4,17 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     justify-content: center;
 }
+
+.spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.alert {
+    height: 60px;
+}
+
+.progress {
+    width: 500px;
+}
