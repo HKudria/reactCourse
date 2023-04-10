@@ -40,7 +40,7 @@ interface FlickrPropsInterface {
 
 export const getData = (props: FlickrPropsInterface) => {
     return fetch(
-        `${URL}${props.method}&api_key=${API_KEY}&gallery_id=66911286-72157647277042064&format=json&nojsoncallback=1`
+        `${URL}${props.method}&api_key=${API_KEY}${props.params}&format=json&nojsoncallback=1`
     ).then(response => {
         return response.json()
     })
