@@ -8,17 +8,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import Header from './components/Header/Header';
 import Form from './components/Form/Form';
+import {Provider} from 'react-redux';
+import {store} from './store/store';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-    <BrowserRouter>
-        <React.StrictMode>
-            <Header/>
-            <Routes>
-                <Route path="/" element={<Main/>}/>
-                <Route path="/aboutUs" element={<AboutUs/>}/>
-                <Route path="/form" element={<Form/>}/>
-                <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-        </React.StrictMode>
-    </BrowserRouter>,
+    <Provider store={store}>
+        <BrowserRouter>
+            <React.StrictMode>
+                <Header/>
+                <Routes>
+                    <Route path="/" element={<Main/>}/>
+                    <Route path="/aboutUs" element={<AboutUs/>}/>
+                    <Route path="/form" element={<Form/>}/>
+                    <Route path="*" element={<NotFoundPage/>}/>
+                </Routes>
+            </React.StrictMode>
+        </BrowserRouter>
+    </Provider>
 )
