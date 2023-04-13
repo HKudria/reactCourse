@@ -1,8 +1,10 @@
 .wrapper {
-    display: grid;
+    display: grid !important;
     grid-gap: 20px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     justify-content: center;
+    margin-top: 20px;
+    border: none !important;
 }
 
 .spinner {
@@ -17,4 +19,22 @@
 
 .progress {
     width: 500px;
+}
+
+@media only screen and (max-width: 1333px) {
+    .wrapper {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media only screen and (max-width: 956px) {
+    .wrapper {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+    .wrapper {
+        grid-template-columns: 1fr;
+    }
 }

@@ -1,5 +1,5 @@
 import s from './Form.module.css'
-import React, {useState} from 'react';
+import React from 'react';
 import Result from './Result/Result';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {FormInterface} from '../../store/form/FormInterface';
@@ -69,9 +69,11 @@ const Form = () => {
                 {errors.switcher && <div className="invalid-feedback d-block">Switcher should be chosen</div>}
                 <button type="submit" data-testid="submit" className="btn btn-primary">Submit</button>
             </form>
+            <div className={s.formResult}>
             {fromState.form.map((el, index) => <Result key={index} text={el.text} select={el.select}
                                                 date={el.date} file={el.file} checkbox={el.checkbox}
                                                 switcher={el.switcher}/>)}
+            </div>
         </div>
     );
 }

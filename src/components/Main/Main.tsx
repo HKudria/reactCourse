@@ -14,7 +14,7 @@ export interface CardData {
 
 function Main() {
     const [isLoad, setIsLoad] = useState(true);
-    const [countArray, setCountArray] = useState<string[]>([]);
+    const [countArray] = useState<string[]>([]);
     const photoState = useAppSelector(getPhotosState);
     const dispatch = useAppDispatch();
 
@@ -32,18 +32,18 @@ function Main() {
 
     return (
         <>
-            {photoState.error && <div className="alert alert-danger" role="alert">
-                {photoState.error}
-            </div>}
-            {isLoad &&
-                <div className={s.spinner}>
-                    <div className={`${s.progress} progress`}>
-                        <div className="progress-bar progress-bar-striped" role="progressbar"
-                             style={{width: `${countArray.length}%`}}></div>
-                    </div>
-                </div>
-            }
             <div className={`${s.wrapper} card`} role={'wrapper'}>
+                {photoState.error && <div className="alert alert-danger" role="alert">
+                    {photoState.error}
+                </div>}
+                {isLoad &&
+                    <div className={s.spinner}>
+                        <div className={`${s.progress} progress`}>
+                            <div className="progress-bar progress-bar-striped" role="progressbar"
+                                 style={{width: `${countArray.length}%`}}></div>
+                        </div>
+                    </div>
+                }
                 {photoState.photos.map((photo, key) => <CardV2 key={key} photo={photo} countIncrease={countIncrease}/>)}
             </div>
         </>
