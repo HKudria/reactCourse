@@ -25,7 +25,7 @@ export const parsePhoto = createAsyncThunk('photo/search', async ({params, metho
 
 
 export const flickrSlice = createSlice({
-    name: 'news',
+    name: 'flickr',
     initialState,
     reducers: {
         setSearch(state, payload) {

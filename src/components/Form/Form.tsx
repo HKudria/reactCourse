@@ -2,26 +2,19 @@ import s from './Form.module.css'
 import React, {useState} from 'react';
 import Result from './Result/Result';
 import {SubmitHandler, useForm} from 'react-hook-form';
-
-export interface FormInterface {
-    text: string,
-    date: string,
-    select: string,
-    checkbox: boolean,
-    switcher: string,
-    file: FileList
-}
-
+import {FormInterface} from '../../store/form/FormInterface';
+import {useAppDispatch, useAppSelector} from '../../store/hooks';
+import {addFormResult, getFormState} from '../../store/form/formSlice';
 
 const Form = () => {
     const {register, handleSubmit, reset, formState: {errors}} = useForm();
+    const fromState = useAppSelector(getFormState);
+    const dispatch = useAppDispatch();
 
     const onSubmit: SubmitHandler<FormInterface> = data => {
-        setResults([...results, data]);
+        dispatch(addFormResult(data))
         reset()
     }
-
-    const [results, setResults] = useState<FormInterface[]>([]);
 
     return (
         <div className={s.wrapper}>
@@ -76,7 +69,7 @@ const Form = () => {
                 {errors.switcher && <div className="invalid-feedback d-block">Switcher should be chosen</div>}
                 <button type="submit" data-testid="submit" className="btn btn-primary">Submit</button>
             </form>
-            {results.map((el, index) => <Result key={index} text={el.text} select={el.select}
+            {fromState.form.map((el, index) => <Result key={index} text={el.text} select={el.select}
                                                 date={el.date} file={el.file} checkbox={el.checkbox}
                                                 switcher={el.switcher}/>)}
         </div>

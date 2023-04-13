@@ -1,7 +1,7 @@
 import React from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/hooks';
-import {getPhotosState, parsePhoto, setError, setSearch} from '../../../store/news/flickrSlice';
-import {flickrMethodsEnum} from '../../../store/news/FlicrkInterface';
+import {getPhotosState, parsePhoto, setError, setSearch} from '../../../store/flickr/flickrSlice';
+import {flickrMethodsEnum} from '../../../store/flickr/FlicrkInterface';
 
 
 const Search = () => {

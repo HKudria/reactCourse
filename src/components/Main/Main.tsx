@@ -1,9 +1,9 @@
 import s from './Main.module.css'
 import React, {useEffect, useState} from 'react';
 import CardV2 from './CardV2/CardV2';
-import {getPhotosState, parsePhoto} from '../../store/news/flickrSlice';
+import {getPhotosState, parsePhoto} from '../../store/flickr/flickrSlice';
 import {useAppDispatch, useAppSelector} from '../../store/hooks';
-import {flickrMethodsEnum} from '../../store/news/FlicrkInterface';
+import {flickrMethodsEnum} from '../../store/flickr/FlicrkInterface';
 
 export interface CardData {
     id: number
