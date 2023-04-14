@@ -16,7 +16,7 @@ const CardV2 = ({photo, countIncrease}: CardV2PropsInterface) => {
     return (
         <>
             {isModal && <Modal photo={photo} closeModal={toggleModal} src={`https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`}/>}
-            <div className={`${s.fontSize} ${s.cardBody} card`} onClick={toggleModal}>
+            <div className={`${s.fontSize} ${s.cardBody} card`} onClick={toggleModal} data-testid='card'>
                 <img className="card-img-top" src={`https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`} alt={photo.id} onLoad={() => countIncrease(photo.id)}/>
                 <div className="card-body">
                     <h5 className="card-title">{photo.title}</h5>

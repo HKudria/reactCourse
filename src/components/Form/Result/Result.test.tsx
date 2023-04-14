@@ -3,8 +3,8 @@ import {describe, expect} from 'vitest';
 import {BrowserRouter as Router} from 'react-router-dom';
 import Result from './Result';
 
-describe('Header', () => {
-    it('should render form', () =>{
+describe('Result', () => {
+    it('should render result', () =>{
 
         const mockJpg = new File(['1234'], 'test.jpg', { type: 'image/jpeg' })
         const mockPng = new File(['1234'], 'test.png', { type: 'image/png' })
@@ -15,7 +15,7 @@ describe('Header', () => {
         expect(screen.getByText(/Text:/i)).toBeInTheDocument();
         expect(screen.getByText(/Date:/i)).toBeInTheDocument();
         expect(screen.getByText(/Select:/i)).toBeInTheDocument();
-        expect(screen.getByText(/Checkbox:/i)).toBeInTheDocument();
+        expect(screen.getByText(/Checkbox: true/i)).toBeInTheDocument();
         expect(screen.getByText(/File:/i)).toBeInTheDocument();
         expect(screen.getByText(/Switcher:/i)).toBeInTheDocument();
     })
