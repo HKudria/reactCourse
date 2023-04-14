@@ -1,0 +1,17 @@
+.fontSize {
+    width: 18rem;
+}
+
+.cardBody {
+    width: 300px;
+    height: 400px !important;
+    align-self: center;
+    justify-self: center;
+}
+
+
+.cardBody img{
+    width: 300px;
+    height: 250px !important;
+    object-fit: cover;
+}
